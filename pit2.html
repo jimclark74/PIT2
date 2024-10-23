@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Get My IP</title>
+</head>
+<body>
+    <h1>Your Public IP Address</h1>
+    <p id="ip"></p>
+    <script>
+        const webhookUrl = 'https://webhook.site/af24b59b-0b56-42d8-9e0e-1681ca9485e9'; // Your webhook URL
+
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ip').innerText = data.ip;
+
+                // Send the IP address to the webhook
+                fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ip: data.ip })
+                });
+            });
+    </script>
+</body>
+</html>
